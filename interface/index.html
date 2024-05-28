@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css">
+    <link rel="stylesheet" href="/interface/css/style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Startier_Curfew</title>
+</head>
+
+    <body>
+        <div id="app">
+            <div class="notify-contanier layout-upright" id="#notify">
+
+                <div class="notify-container" v-for=" (data,idx) in NotifyAnnounce" :key="idx">
+                    <div class="text-container">{{data.title}}</div>
+                    <div :class="data.type == 'curfew' ? 'header-container-curfew' : 'header-container-rampage'">
+                        <div class="text-header">
+                            <span>{{data.type == 'curfew' ? 'CURFEW' : 'RAMPAGE'}}</span>
+                        </div>
+                        <div class="arrow-left">
+                            <span :class="data.type == 'curfew' ? 'arrow-curfew' : 'arrow-rampage'"></span>
+                            <span :class="data.type == 'curfew' ? 'arrow-curfew' : 'arrow-rampage'"></span>
+                            <span :class="data.type == 'curfew' ? 'arrow-curfew' : 'arrow-rampage'"></span>
+                        </div>
+                
+                        <div class="arrow-right">
+                            <span :class="data.type == 'curfew' ? 'arrow-curfew' : 'arrow-rampage'"></span>
+                            <span :class="data.type == 'curfew' ? 'arrow-curfew' : 'arrow-rampage'"></span>
+                            <span :class="data.type == 'curfew' ? 'arrow-curfew' : 'arrow-rampage'"></span>
+                        </div>          
+                    </div>
+                    <div class="bottom-container">
+                        <div class="text-bottom">
+                            <span>โปรดออกจากพื้นที่ด้วยครับ !</span>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="box-announce">
+                <Transition>
+                <div class="box-post" v-if="showBoxAnnounce">
+                    <div class="text-boxheader">
+                        <span style="color: #ffa603;">POLICE CURFEW / <span style="color: rgb(255, 255, 255);">POLICE RAMPAGE</span></span>
+                    </div>
+                    <div class="box-select-type">
+                        <div class="box-curfew" :class="type == 'curfew' ? 'button-active' : 'button-inactive'">
+                            <button class="curfew" @click="ChangeType('curfew')">CURFEW</button>
+                        </div>
+                        <div class="box-rampage" :class="type == 'rampage' ? 'button-active' : 'button-inactive'">
+                            <button class="rampage" @click="ChangeType('rampage')">RAMPAGE</button>
+                        </div>
+                    </div>
+                    <div class="box-input">
+                        <input type="text" v-model="title" :disabled="type == 'rampage' ? '' : disabled" placeholder="สถานที่">
+                    </div>
+                    <div class="box-submit">
+                        <button class="submit" @click="AnnounceCurfew()">SUBMIT</button>
+                    </div>
+                    <div class="box-show-ann-close">
+                        <button class="show-ann-close" @click="showItemAnnounce = !showItemAnnounce">
+                            <i class="fa-solid" :class="showItemAnnounce ? 'fa-circle-chevron-down': 'fa-circle-chevron-up'"></i>
+                        </button>
+                    </div>
+                </div>
+            </Transition>
+                <Transition>
+                 <div class="box-announce-close" v-if="showItemAnnounce">
+                    <div class="box-item-ann">
+                        <!--  -->
+                        <button class="item-ann" v-for=" (data,idx) in NotifyAnnounce" :key="idx" @click="RemoveNotifyToBackend(data.id)">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <p>{{data.type}}</p>
+                            <p>{{data.title}}</p>
+                        </button>
+                        <!--  -->
+                    </div>
+                </div>
+            </Transition>
+            </div>
+        </div>
+    </body>
+
+    <script src="javascript/app.js"></script>
+
+</body>
+
+</html>
