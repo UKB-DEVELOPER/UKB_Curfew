@@ -28,26 +28,18 @@ AddEventHandler('esx:setJob', function(job)
     ESX.PlayerData.job = job
 end)
 
--- Citizen.CreateThread(function()
---     while true do
---         Citizen.Wait(0)
---         if IsControlJustReleased(0, 344) and GetLastInputMethod(0) then
---             for k, v in pairs(Curfew.job) do
---                 if ESX.PlayerData.job ~= nil and ESX.PlayerData.job.name == v then
---                     TriggerScreenblurFadeIn(true)
---                     SetNuiFocus(true, true)
---                     SendNUIMessage({
---                         showBoxAnnounce = true,
---                         type = 'curfew'
---                     })
---                 end
---             end
---         end
---     end
--- end)
+if Curfew.KeyOpenMenu then
+    RegisterKeyMapping('startCurfew', 'Start Cur few', 'keyboard', Curfew.keybind)
 
-StartCurfew = function(job)
-    if checkjob(job) and GlobalState.Ry_CurfewCheckLicense then
+    RegisterCommand('startCurfew', function()
+        if ESX.PlayerData.job ~= nil then
+            StartCurfew()
+        end
+    end, false)
+end
+
+StartCurfew = function()
+    if checkjob(ESX.PlayerData.job.name) and GlobalState.Ry_CurfewCheckLicense then
         TriggerScreenblurFadeIn(true)
         SetNuiFocus(true, true)
         SendNUIMessage({
@@ -220,7 +212,7 @@ AddEventHandler(ResourceName .. ':createForAll', function(x, y, z, type, title, 
             streetname = tostring(GetStreetNameFromHashKey(var1)),
             zone = current_zone
         }
-        location[id].blip = AddBlipForRadius(x, y, z, 200.0)
+        location[id].blip = AddBlipForRadius(x, y, z, 100.0)
         SetBlipColour(location[id].blip, 1)
         SetBlipAlpha(location[id].blip, 100)
     else
@@ -231,7 +223,7 @@ AddEventHandler(ResourceName .. ':createForAll', function(x, y, z, type, title, 
             streetname = tostring(GetStreetNameFromHashKey(var1)),
             zone = current_zone
         }
-        location[id].blip = AddBlipForRadius(x, y, z, 200.0)
+        location[id].blip = AddBlipForRadius(x, y, z, 100.0)
         SetBlipColour(location[id].blip, 1)
         SetBlipAlpha(location[id].blip, 100)
     end
@@ -248,11 +240,16 @@ Citizen.CreateThread(function()
     while true do
         local sleep = 1000
         if next(location) ~=nil then
-            sleep = 1
+            local playerped = PlayerPedId()
+		    local coords = GetEntityCoords(playerped)
             for k, pos in pairs(location) do
-                rgb = RGBRainbow(1)
-                DrawMarker(1, pos.x, pos.y, pos.z, 0, 0, 0, 0, 0, 0, 100.0001, 100.0001, 400.0001, 1000, 0, 0, rgb.r, rgb.g,
-                    rgb.b, 0.4, 0)
+                local mx = Vdist(coords.x, coords.y, coords.z, pos.x, pos.y, coords.z)
+                if mx < 100.0 then
+                    sleep = 1
+                    rgb = RGBRainbow(1)
+                    DrawMarker(1, pos.x, pos.y, pos.z, 0, 0, 0, 0, 0, 0, 100.0001, 100.0001, 400.0001, 1000, 0, 0, rgb.r, rgb.g,
+                        rgb.b, 0.4, 0)
+                end
             end
         end
         Citizen.Wait(sleep)

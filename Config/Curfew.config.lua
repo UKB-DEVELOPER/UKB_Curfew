@@ -1,6 +1,8 @@
 Curfew = {}
 
-Curfew.job = {'police','council'}
+Curfew.KeyOpenMenu = true
+Curfew.keybind = 'F11'
+Curfew.job = {'police','council'} -- job ที่สามารถใช้งานได้
 
 -- เรียกใช้งาน example
--- exports.Startier_Curfew:StartCurfew('police')
+-- exports.Ry_Curfew:StartCurfew()
