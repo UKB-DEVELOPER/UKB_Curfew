@@ -18,7 +18,7 @@ Staus = function(errNum, data)
 
     Status = false
 
-    if (errNum == 200 and data == scriptId) then
+    if (errNum == 200 and data == scriptId and ResourceName == 'Ry_Curfew') then
         print("\n")
         print("^2##############################################")
         print("^2## ^5Thank you for purchasing RyShop - Script ^2##")
