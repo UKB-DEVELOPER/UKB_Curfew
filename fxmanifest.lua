@@ -7,7 +7,6 @@ client_scripts {
     'Config/Base.config.lua',
     'Config/Notify.config.lua',
     'Config/Curfew.config.lua',
-    'Config/license.config.lua',
     'Source/Client/client.lua',
 }
 
@@ -15,7 +14,6 @@ server_scripts {
     'Config/Base.config.lua',
     'Config/Notify.config.lua',
     'Config/Curfew.config.lua',
-    'Config/license.config.lua',
     'Source/Server/server.lua',
 }
 

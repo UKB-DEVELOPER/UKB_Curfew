@@ -39,7 +39,7 @@ if Curfew.KeyOpenMenu then
 end
 
 StartCurfew = function()
-    if checkjob(ESX.PlayerData.job.name) and GlobalState.Ry_CurfewCheckLicense then
+    if checkjob(ESX.PlayerData.job.name) then
         TriggerScreenblurFadeIn(true)
         SetNuiFocus(true, true)
         SendNUIMessage({

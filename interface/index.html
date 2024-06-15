@@ -41,7 +41,7 @@
                 </div>
                
             </div>
-            <div class="box-announce">
+            <div class="box-announce" v-if="showBoxAnnounce || showItemAnnounce">
                 <Transition>
                 <div class="box-post" v-if="showBoxAnnounce">
                     <div class="text-boxheader">
